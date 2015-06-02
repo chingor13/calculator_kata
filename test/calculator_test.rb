@@ -7,6 +7,12 @@ class CalculatorTest < Minitest::Test
     @calculator = StringCalculator::Calculator.new
   end
 
+  def test_can_handle_bad_input
+    assert_raises ArgumentError do
+      @calculator.add(nil)
+    end
+  end
+
   def test_can_add_with_no_parameters
     assert_equal 0, @calculator.add("")
   end
