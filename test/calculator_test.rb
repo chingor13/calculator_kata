@@ -64,4 +64,7 @@ class CalculatorTest < Minitest::Test
     assert_equal 6, @calculator.add("1003,2,4")
   end
 
+  def test_delimiters_of_any_length
+    assert_equal 6, @calculator.add("//[***]\n1***2***3")
+  end
 end
