@@ -41,4 +41,8 @@ class CalculatorTest < Minitest::Test
     assert_equal 6, @calculator.add("1\n2,3")
   end
 
+  def test_can_declare_delimiter
+    assert_equal 3, @calculator.add("//;\n1;2")
+  end
+
 end
