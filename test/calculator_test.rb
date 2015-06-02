@@ -45,4 +45,19 @@ class CalculatorTest < Minitest::Test
     assert_equal 3, @calculator.add("//;\n1;2")
   end
 
+  def test_no_negative_numbers
+    assert_raises ArgumentError do
+      @calculator.add("1,-2")
+    end
+  end
+
+  def test_negative_number_error_lists_numbers
+    begin
+      @calculator.add("1,-2,4,-63")
+      assert false, "should not get here"
+    rescue ArgumentError => e
+      assert_equal "negatives not allowed: -2,-63", e.message
+    end
+  end
+
 end
