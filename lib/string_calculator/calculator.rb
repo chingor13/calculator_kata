@@ -14,14 +14,14 @@ module StringCalculator
 
       numbers = DelimiterParser.split(rest.join("\n"), delimiters)
 
-      # number validator
+      # number validator - we error if there are any negative numbers
       real_numbers = numbers.map(&:to_i)
       negatives = real_numbers.select do |num|
         num < 0
       end
       raise ArgumentError, "negatives not allowed: #{negatives.join(",")}" if negatives.length > 0
 
-      # number rejector
+      # number rejector - we ignore numbers over 1000
       real_numbers.reject! do |num|
         num > 1000
       end
