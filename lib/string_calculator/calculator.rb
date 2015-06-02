@@ -1,18 +1,12 @@
 module StringCalculator
   class Calculator
-    DELIMITER_PATTERN = /^\/\/(.)$/
+    DEFAULT_DELIMITER = /[,\n]/
 
     # numbers should be a comma separated list of numbers
     def add(numbers)
       raise ArgumentError, "numbers must be a string" unless numbers.is_a?(String)
 
-      delimiter = /[,\n]/
-      lines = numbers.split("\n")
-
-      if lines.length > 0 && match = lines.first.match(DELIMITER_PATTERN)
-        delimiter = Regexp.new(match[1])
-        numbers = lines[1..-1].join("\n")
-      end
+      delimiter, numbers = DelimiterParser.parse(numbers, DEFAULT_DELIMITER)
 
       # number validator
       real_numbers = numbers.split(delimiter).map(&:to_i)
