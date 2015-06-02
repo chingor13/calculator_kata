@@ -26,4 +26,15 @@ class CalculatorTest < Minitest::Test
     assert_equal 7, @calculator.add("2,5")
   end
 
+  def test_can_add_arbitrary_number_of_integers
+    # pick a random number between 10 and 500 and we'll sum all numbers from 1
+    #   to that number and assert that the sum is correct
+    max = Random.new.rand(490) + 10
+    numbers = 1.upto(max).to_a.join(",")
+
+    # the sum of 1..n = n(n+1)/2 by math
+    expected = max * (max + 1) / 2
+    assert_equal expected, @calculator.add(numbers)
+  end
+
 end
