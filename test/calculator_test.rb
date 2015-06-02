@@ -60,4 +60,8 @@ class CalculatorTest < Minitest::Test
     end
   end
 
+  def test_ignores_numbers_greater_than_1000
+    assert_equal 6, @calculator.add("1003,2,4")
+  end
+
 end
