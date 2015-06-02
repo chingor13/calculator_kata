@@ -26,6 +26,7 @@ module StringCalculator
         num > 1000
       end
 
+      # do the sum
       real_numbers.inject(0, &:+)
     end
 
