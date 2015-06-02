@@ -8,8 +8,17 @@ class DelimiterParserTest < Minitest::Test
   end
 
   def test_can_parse_single_character
-    delimiter = StringCalculator::DelimiterParser.detect("//;")
-    assert_equal /;/, delimiter
+    delimiters = StringCalculator::DelimiterParser.detect("//;")
+    assert_equal [";"], delimiters
+  end
+
+  def test_can_detect_multiple_character_delimiters
+    delimiters = StringCalculator::DelimiterParser.detect("//[***]")
+    assert_equal ["***"], delimiters
+  end
+
+  def test_can_split_on_multiple_delimiters
+    assert_equal ["1","2","3","4"], StringCalculator::DelimiterParser.split("1;2,3***4", ["***", ",", ";"])
   end
 
 end

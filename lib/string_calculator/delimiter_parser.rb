@@ -1,13 +1,18 @@
 module StringCalculator
   class DelimiterParser
-    DELIMITER_PATTERN = /^\/\/(.)$/
+    DELIMITER_PATTERN = /^\/\/(.*)$/
 
     class << self
       def detect(string)
         return unless string.is_a?(String)
         return unless match = string.match(DELIMITER_PATTERN)
 
-        Regexp.new(match[1])
+        case match[1]
+        when /^.$/
+          [match[1]]
+        else
+          match[1].scan(/\[([^\]]+)\]/).flatten
+        end
       end
 
       def parse(string, default_delimiter)
@@ -19,6 +24,14 @@ module StringCalculator
         end
 
         [delimiter, rest.join("\n")]
+      end
+
+      def split(string, delimiters)
+        results = [string]
+        delimiters.each do |delimiter|
+          results.map! {|str| str.split(delimiter) }.flatten!
+        end
+        results
       end
     end
   end

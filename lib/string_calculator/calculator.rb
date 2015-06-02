@@ -1,15 +1,21 @@
 module StringCalculator
   class Calculator
-    DEFAULT_DELIMITER = /[,\n]/
+    DEFAULT_DELIMITERS = [",", "\n"]
 
     # numbers should be a comma separated list of numbers
     def add(numbers)
       raise ArgumentError, "numbers must be a string" unless numbers.is_a?(String)
 
-      delimiter, numbers = DelimiterParser.parse(numbers, DEFAULT_DELIMITER)
+      definition, *rest = numbers.split("\n")
+      unless delimiters = DelimiterParser.detect(definition)
+        delimiters = DEFAULT_DELIMITERS
+        rest.unshift(definition)
+      end
+
+      numbers = DelimiterParser.split(rest.join("\n"), delimiters)
 
       # number validator
-      real_numbers = numbers.split(delimiter).map(&:to_i)
+      real_numbers = numbers.map(&:to_i)
       negatives = real_numbers.select do |num|
         num < 0
       end
