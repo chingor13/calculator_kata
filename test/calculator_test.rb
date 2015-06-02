@@ -37,4 +37,8 @@ class CalculatorTest < Minitest::Test
     assert_equal expected, @calculator.add(numbers)
   end
 
+  def test_can_handle_newlines
+    assert_equal 6, @calculator.add("1\n2,3")
+  end
+
 end
